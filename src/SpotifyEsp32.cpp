@@ -91,8 +91,13 @@ void Spotify::begin(){
       SPOTIFY_LOGD(_TAG, "Using default scopes: all");
     }
 
+    char encoded_redirect_uri[256];
+    char encoded_scopes[768];
+    urlEncode(_redirect_uri, encoded_redirect_uri, sizeof(encoded_redirect_uri));
+    urlEncode(scopes, encoded_scopes, sizeof(encoded_scopes));
+
     char url[1024];
-    snprintf(url, sizeof(url),"https://accounts.spotify.com/authorize" "?client_id=%s" "&response_type=code" "&redirect_uri=%s" "&scope=%s" "&state=%s", _client_id, _redirect_uri, scopes,_random_state);
+    snprintf(url, sizeof(url),"https://accounts.spotify.com/authorize" "?client_id=%s" "&response_type=code" "&redirect_uri=%s" "&scope=%s" "&state=%s", _client_id, encoded_redirect_uri, encoded_scopes, _random_state);
 
     Serial.println("Open this URL in your browser to authorize:");
     Serial.println(url);
