@@ -439,6 +439,13 @@ class Spotify {
     /// @return response object containing http status code and reply.
     response start_a_users_playback(const char* device_id = nullptr);
 
+    /// @brief Start a new playback or resume current playback with a specific context (album, artist, playlist, show).
+    /// @param context_uri Spotify URI of the context to play (album, artist, playlist, show).
+    /// @param track_uri Spotify URI of the track to start playback with (Optional).
+    /// @param device_id Id of the device this command is targeting (Optional).
+    /// @return response object containing http status code and reply.
+    response start_playback_with_context(const char* context_uri, const char* track_uri = nullptr, const char* device_id = nullptr);
+
     /// @brief Toggle shuffle on or off for the user’s playback.
     /// @param state Shuffle mode (true = on, false = off).
     /// @return response object containing http status code and reply.

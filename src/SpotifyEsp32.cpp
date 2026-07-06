@@ -938,6 +938,23 @@ response Spotify::start_a_users_playback(const char* device_id){
   return RestApiPut(url);
 }
 
+response Spotify::start_playback_with_context(const char* context_uri, const char* track_uri, const char* device_id) {
+  char url[_standard_url_size];
+  if (device_id == nullptr)
+    snprintf(url, sizeof(url), "%sme/player/play", _base_url);
+  else
+    snprintf(url, sizeof(url), "%sme/player/play?device_id=%s", _base_url, device_id);
+
+  char payload[256];
+  if (track_uri != nullptr)
+    snprintf(payload, sizeof(payload), "{\"context_uri\":\"%s\",\"offset\":{\"uri\":\"%s\"}}", context_uri, track_uri);
+  else
+    snprintf(payload, sizeof(payload), "{\"context_uri\":\"%s\"}", context_uri);
+
+  int payload_size = strlen(payload);
+  return RestApiPut(url, payload_size, payload);
+}
+
 response Spotify::toggle_shuffle(bool state){
   char url[_standard_url_size];
   snprintf(url, sizeof(url), "%sme/player/shuffle?state=%s", _base_url, state ? "true" : "false");
