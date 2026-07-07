@@ -1129,7 +1129,7 @@ bool Spotify::volume_modifyable(){
 #endif
 
 char* Spotify::convert_id_to_uri(const char* id, const char* type,char * uri){
-  snprintf(uri,sizeof(uri), "spotify:%s:%s", type, id);
+  snprintf(uri, spotify_types::SIZE_OF_URI, "spotify:%s:%s", type, id);
   return uri;
 }
 
